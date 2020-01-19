@@ -1,0 +1,45 @@
+CREATE TABLE actuador (
+                id INT NOT NULL AUTO_INCREMENT,
+                nombre VARCHAR(25) NOT NULL,
+                estado BOOLEAN NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE registro_actuador (
+                id INT NOT NULL AUTO_INCREMENT,
+                fecha DATETIME NOT NULL,
+                valor DOUBLE PRECISION NOT NULL,
+                id_actuador INT NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE sensor (
+                id INT NOT NULL AUTO_INCREMENT,
+                nombre VARCHAR(25) NOT NULL,
+                valor DOUBLE PRECISION NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE registro_sensor (
+                id INT NOT NULL AUTO_INCREMENT,
+                fecha DATETIME NOT NULL,
+                valor DOUBLE PRECISION NOT NULL,
+                id_sensor INT NOT NULL,
+                PRIMARY KEY (id)
+);
+
+
+ALTER TABLE registro_actuador ADD CONSTRAINT actuador_registro_actuador_fk
+FOREIGN KEY (id_actuador)
+REFERENCES actuador (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE registro_sensor ADD CONSTRAINT sensor_registro_sensor_fk
+FOREIGN KEY (id_sensor)
+REFERENCES sensor (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
