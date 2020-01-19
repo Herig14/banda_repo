@@ -1,65 +1,90 @@
 var dat = []
 var chart
+var chart2
 var validos = 0
 var defectuosos = 0
+var flag = 0
+var upbol = true
 window.onload = function() {
-    this.UpdateJson()
-    temp =[{name:"Correctos", y:this.validos},{name:"Dfectuosos", y:this.defectuosos} ]
-     chart = Highcharts.chart('container', {
+    UpdateJson()
+    temp =[{name:"Correctos", y:this.validos},{name:"Defectuosos", y:this.defectuosos} ]
+    console.log(temp)
+    chart = Highcharts.chart('container', {
         chart: {
             type: 'pie'
         },
-    
+        title: {
+            text: 'Correctos Vs Defectuosos'
+        },    
         series: [{
             data: temp
         }]
     });
+    chart2 = Highcharts.chart('container2', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Produccion'
+        },
+        xAxis: {
+            categories: ['Esto', 'va', 'a', 'estar']
+        }
+        ,
+        yAxis: {
+            allowDecimals: false,
+            min: 0,
+            title: {
+                text: 'Numero de unidades'
+            }
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        series: [{
+            name: 'Correctos',
+            data: [5, 3, 4, 7, 2]
+        }, {
+            name: 'Defectuosos',
+            data: [2, 2, 3, 2, 1]
+        }]
+    });
   };
 
-
-
-// the button action
-var tid = setInterval(test, 2000);
+var tid = setInterval(test, 500);
+var tid2 = setInterval(test2, 2000);
 function test() {
-    UpdateJson()
-    temp =[{name:"Correctos", y:this.validos},{name:"Dfectuosos", y:this.defectuosos} ]
-    console.log(validos)
-        chart.series[0].setData(temp);  
+    UpdateJson2()
+    console.log("actu")
+   if(upbol){
+    temp =[{name:"Correctos", y:this.validos},{name:"Defectuosos", y:this.defectuosos} ]
+    chart.series[0].setData(temp);
+    upbol =false
+    }
+    /*
+    validos = validos +Math.floor(Math.random() * 20);
+    temp =[{name:"Correctos", y:this.validos},{name:"Defectuosos", y:this.defectuosos} ]
+    chart.series[0].setData(temp);*/
 }
+function test2() {
+    console.log("actu2")
+   // chart2.series[0].addPoint(10);
 
-/*var datos = Highcharts.chart('container',{
-    //////////////////////////1////////////////////////
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Cantidad de objetos detectados'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true
-            }
-        }
-    },
-    series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        data: []
-    }]})*/
-
-    //Highcharts.chart('container', datos)
-//var tid = setInterval(mycode, 2000);
+    for (i in chart2.series){
+        chart2.series[i].addPoint(Math.floor(Math.random() * 15));
+        chart2.series[i].data[0].remove();
+    }
+  //  chart2.xAxis[0].update({categories:['Esto', 'va', 'a', 'estar', 'o no']}, true);
+ // chart2.xAxis[0].setCategories(['', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']);
+}
 function UpdateJson() {
   console.log("hola")
   $.getJSON( "/json/datos.json", function( json ) {
-    //console.log( "JSON Data: " + json[0].objeto);
-    //temp =[{name:"Correctos", y:0},{name:"Dfectuosos", y:0} ]
     y1=0
     y2=0
     for (i in json){
@@ -69,13 +94,30 @@ function UpdateJson() {
             y2++
         }
     }
-    setData(y1,y2)
-   // console.log(json)
+    setData(y1,y2,Object.keys(json).length)
    });
 }
-function setData(y1,y2){
+function UpdateJson2() {
+   // console.log("hola")
+    $.getJSON( "/json/datos.json", function( json ) {
+      y1=validos
+      y2=defectuosos
+      T = Object.keys(json).length
+      for (var i = flag; i < T; i++){
+          console.log("Hola")
+          upbol = true;
+          if(json[i].objeto==1){
+              y1++
+          }else{
+              y2++
+          }
+      }
+      
+      setData(y1,y2,T)
+     });
+  }
+function setData(y1,y2,b){
     validos = y1
     defectuosos = y2
-    console.log(y1)
-    console.log(y2)
+    flag = b
 }
