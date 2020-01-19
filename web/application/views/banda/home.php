@@ -35,30 +35,9 @@
           <div id='container' class="col-md-6" style="min-height: 25em;">
             <h2>Section title</h2>
           </div>
-          <div class="col-md-6">
-            <h2>Section title</h2>
-            <div class="table-responsive">
-              <table class="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Header</th>
-                    <th>Header</th>
-                    <th>Header</th>
-                    <th>Header</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1,001</td>
-                    <td>Lorem</td>
-                    <td>ipsum</td>
-                    <td>dolor</td>
-                    <td>sit</td>
-                  </tr>
+          <div id='container2' class="col-md-6">
+            <h2>gefico 2</h2>
 
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
