@@ -1,0 +1,156 @@
+
+!
+! Last configuration change at 22:49:03 UTC Fri Jan 10 2020
+!
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+!
+hostname REP
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable password BandaProyecto
+!
+no aaa new-model
+!
+!
+ip dhcp pool webuidhcp
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+multilink bundle-name authenticated
+!
+!
+!
+crypto pki trustpoint TP-self-signed-214371226
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-214371226
+ revocation-check none
+ rsakeypair TP-self-signed-214371226
+!
+!
+crypto pki certificate chain TP-self-signed-214371226
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32313433 37313232 36301E17 0D323030 31313031 39313130 
+  385A170D 33303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3231 34333731 
+  32323630 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 AC7F3C87 6E684209 BDE0969E 1C5DF6AC 370EE47B 53A06EB2 13793DFC 
+  A951F20F FFC394B5 194AFC7A DE5D8896 6D79FA13 0A83E2CF CCEA462E A235B5F7 
+  C0C959A7 ACB6BF6D D20D587F 730BE45D 776ECFEC C13BD86F 7E588DF6 34258193 
+  DD0A4486 C65FB131 14CD9C1F 1CEFB856 890BEFB3 745E0920 8B05194A 010E03E0 
+  BF7E8E50 09860E04 2E9EE69C 00ED50A7 A94C9E34 EE6CC987 01666440 FEA73963 
+  644CDA89 5BD5922A A2025655 F73E35C0 AD3AD399 DD6D87CE 625D961C 879FF34B 
+  475F4A49 828DE2B6 3B41E305 0F497CAB E2B636F6 E620D94D 0A5441FA 91FE7F0B 
+  67CC474B E9AFE336 A25B3FBB D2E245D1 28B477B8 36AB9208 1DF3E4A0 8D5C3BCE 
+  D0B84925 02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F 
+  0603551D 23041830 16801454 FF8BBB0F 72956432 65BCE51F 7179C4AF 9DD9B030 
+  1D060355 1D0E0416 041454FF 8BBB0F72 95643265 BCE51F71 79C4AF9D D9B0300D 
+  06092A86 4886F70D 01010505 00038201 010052CA 4AF96579 6AA2A27C 4251FD92 
+  157D168F 94E3AD59 E3A4D159 4A32498D 56B9FEB4 859E4BC1 BC7BF245 AB8D65FC 
+  2AD2FB8A 84E8B949 F777B48D 933117B3 25BC3C2D 7936976B 41C5B21D B5C0A71B 
+  697560FA 1B7A6AD1 6F18DBF1 BD005C68 5D8C3907 689CE540 9725D5CE C9809FE3 
+  E3867D9C 0A049841 54EC1CAC 04DF146F F0C9FBD2 731C8131 B22A3CE1 9A91C05B 
+  E091205A 3A33CF61 CBA56F4B DC64DD37 914DB189 02021838 29E258C0 649C360A 
+  E00CEA2D B85B5149 980E300B EF8C5514 A2287DAA D5305EC3 53E606E0 0CC9AE94 
+  654F6578 F6BE9375 6A120F4E 50C9A96B 51B4223E C884D0B2 BF98EB03 8F7FC423 
+  738880AC 4D3B18D5 329EA468 F8817ADB E0FF
+  	quit
+!
+license udi pid ISR4221/K9 sn FJC2308A07B
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+ mode none
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 192.168.2.1 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ ip address 192.168.1.1 255.255.255.0
+ negotiation auto
+!
+interface Serial0/1/0
+ ip address 180.165.100.34 255.255.255.252
+!
+interface Serial0/1/1
+ ip address 180.165.210.33 255.255.255.252
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner motd 
+      _
+     ( )
+      H
+      H
+     _H_
+  .-'-.-'-.
+ /         \
+|           |
+|   .-------'._
+|  / /  '.' '. \
+|  \ \ @   @ / /
+|   '---------'
+|    _______|
+|  .'-+-+-+|
+|  '.-+-+-+|         Syntax UPS
+|    """""" |
+'-.__   __.-'
+     """
+-ACCESO RESTRINGIDO VERIFIQUE CREDENCIALES-
+
+!
+line con 0
+ password BandaProyecto
+ login
+ transport input none
+ stopbits 1
+line vty 0 4
+ password BandaProyecto
+ login
+!
+!
+!
+!
+!
+!
+end

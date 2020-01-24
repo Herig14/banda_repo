@@ -1,0 +1,17 @@
+sw1SW1
+(config)#int fa0/1
+SW1(config-if)#switchport mode trunk
+switchport trunk allowed vlan 10,20,30
+
+
+int vlan 10
+ip address 172.16.42.1 255.255.255.224
+no sh
+
+int vlan 20
+ip address 172.16.42.33 255.255.255.224
+no sh
+
+int vlan 30
+ip address 172.16.42.65 255.255.255.224
+no sh

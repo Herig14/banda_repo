@@ -1,0 +1,131 @@
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname HQ
+!
+boot-start-marker
+boot-end-marker
+!
+enable password BandaProyecto
+!
+no aaa new-model
+!
+resource policy
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+ip subnet-zero
+ip cef
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 172.16.42.253
+ip dhcp excluded-address 172.16.42.226
+ip dhcp excluded-address 172.16.42.1
+ip dhcp excluded-address 172.16.42.33
+ip dhcp excluded-address 172.16.42.65
+!
+ip dhcp pool ADMINISTRADOR
+   network 172.16.42.0 255.255.255.224
+   default-router 172.16.42.253 
+!
+ip dhcp pool WEBDESIGNER
+   network 172.16.42.32 255.255.255.224
+   default-router 172.16.42.253 
+!
+ip dhcp pool CLIENTES
+   network 172.16.42.64 255.255.255.224
+   default-router 172.16.42.253 
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.100.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.10
+ encapsulation dot1Q 10
+ ip address 172.16.42.1 255.255.255.224
+ no snmp trap link-status
+!
+interface FastEthernet0/1.20
+ encapsulation dot1Q 20
+ ip address 172.16.42.33 255.255.255.224
+ no snmp trap link-status
+!
+interface FastEthernet0/1.30
+ encapsulation dot1Q 30
+ ip address 172.16.42.65 255.255.255.224
+ no snmp trap link-status
+!
+interface Serial0/3/0
+ ip address 180.165.210.34 255.255.255.252
+ no fair-queue
+!
+interface Serial0/3/1
+ ip address 200.165.209.65 255.255.255.252
+!
+router ospf 1
+ router-id 20.20.20.20
+ log-adjacency-changes
+ network 172.16.42.0 0.0.0.31 area 0
+ network 172.16.42.32 0.0.0.31 area 0
+ network 172.16.42.64 0.0.0.31 area 0
+ network 180.165.210.32 0.0.0.3 area 0
+ network 200.165.209.64 0.0.0.3 area 0
+!
+ip classless
+!
+ip http server
+ip http authentication local
+!
+!
+control-plane
+!
+banner motd 
+      _
+     ( )
+      H
+      H
+     _H_
+  .-'-.-'-.
+ /         \
+|           |
+|   .-------'._
+|  / /  '.' '. \
+|  \ \ @   @ / /
+|   '---------'
+|    _______|
+|  .'-+-+-+|
+|  '.-+-+-+|         Syntax UPS
+|    """""" |
+'-.__   __.-'
+     """
+-ACCESO RESTRINGIDO VERIFIQUE CREDENCIALES-
+
+!
+line con 0
+ password BandaProyecto
+ login
+ stopbits 1
+line aux 0
+line vty 0 4
+ password BandaProyecto
+ login
+!
+end

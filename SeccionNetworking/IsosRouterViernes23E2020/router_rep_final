@@ -1,0 +1,99 @@
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname REP
+!
+boot-start-marker
+boot-end-marker
+!
+enable password BandaProyecto
+!
+no aaa new-model
+!
+resource policy
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+ip subnet-zero
+ip cef
+!
+!
+no ip dhcp use vrf connected
+!
+ip dhcp pool webuidhcp
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.100.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ ip address 192.168.200.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Serial0/3/0
+ ip address 180.165.100.34 255.255.255.252
+!
+interface Serial0/3/1
+ ip address 200.165.209.66 255.255.255.252
+ clockrate 125000
+!
+router ospf 1
+ router-id 10.10.10.10
+ log-adjacency-changes
+ network 180.165.100.32 0.0.0.3 area 0
+ network 192.168.200.0 0.0.0.255 area 0
+ network 200.165.209.64 0.0.0.3 area 0
+!
+ip classless
+!
+ip http server
+ip http authentication local
+!
+!
+control-plane
+!
+banner motd 
+      _
+     ( )
+      H
+      H
+     _H_
+  .-'-.-'-.
+ /         \
+|           |
+|   .-------'._
+|  / /  '.' '. \
+|  \ \ @   @ / /
+|   '---------'
+|    _______|
+|  .'-+-+-+|
+|  '.-+-+-+|         Syntax UPS
+|    """""" |
+'-.__   __.-'
+     """
+-ACCESO RESTRINGIDO VERIFIQUE CREDENCIALES-
+
+!
+line con 0
+ password BandaProyecto
+ login
+ stopbits 1
+line aux 0
+line vty 0 4
+ password BandaProyecto
+ login
+!
+end
